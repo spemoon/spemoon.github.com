@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="人在江湖漂">
+<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:site_name" content="人在江湖漂">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="人在江湖漂">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archives/"/>
+
+
+
+
+
+  <title>IE与FF脚本兼容性问题 | 人在江湖漂</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人在江湖漂</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+
+            
+              首页
+            
+
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+
+            
+              归档
+            
+
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/10/25/ie-ff-js-script-compatible/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SpeMoon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人在江湖漂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">IE与FF脚本兼容性问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-10-25T00:00:00+08:00">2011-10-25</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="getYear-方法"><a href="#getYear-方法" class="headerlink" title="getYear()方法"></a>getYear()方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> year = <span class="keyword">new</span> <span class="built_in">Date</span>().getYear();</span><br><span class="line"><span class="built_in">document</span>.write(year);</span><br></pre></td></tr></table></figure>
+<p>在IE中得到的日期是”2010”，在Firefox中看到的日期是”110”，主要是因为在 Firefox 里面 getYear 返回的是 “当前年份-1900” 的值。</p><p></p>
+<h5 id="【兼容处理】"><a href="#【兼容处理】" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>加上对年份的判断，如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> year= <span class="keyword">new</span> <span class="built_in">Date</span>().getYear();</span><br><span class="line">year = (year&amp;lt;<span class="number">1900</span>?(<span class="number">1900</span>+year):year);</span><br><span class="line"><span class="built_in">document</span>.write(year);</span><br></pre></td></tr></table></figure>
+<p>也可以通过 getFullYear getUTCFullYear 去调用:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> year = <span class="keyword">new</span> <span class="built_in">Date</span>().getFullYear();</span><br><span class="line"><span class="built_in">document</span>.write(year);</span><br></pre></td></tr></table></figure>
+<h3 id="eval-函数"><a href="#eval-函数" class="headerlink" title="eval()函数"></a>eval()函数</h3><p>在IE中，可以使用eval(“idName”)或getElementById(“idName”)来取得id为idName的HTML对象；Firefox下只能使用getElementById(“idName”)来取得id为idName的HTML对象。</p>
+<h5 id="【兼容处理】-1"><a href="#【兼容处理】-1" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>统一用getElementById(“idName”)来取得id为idName的HTML对象。</p>
+<h3 id="const声明"><a href="#const声明" class="headerlink" title="const声明"></a>const声明</h3><p>在 IE 中不能使用 const 关键字。如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> constVar = <span class="number">32</span>;</span><br></pre></td></tr></table></figure>
+<p>在IE中这是语法错误。</p>
+<h5 id="【兼容处理】-2"><a href="#【兼容处理】-2" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>不使用 const ，以 var 代替。</p>
+<h3 id="var"><a href="#var" class="headerlink" title="var"></a>var</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo=<span class="function"><span class="keyword">function</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">   <span class="built_in">document</span>.write(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数在IE上运行正常，Firefox下却报错了。</p>
+<h5 id="【兼容处理】-3"><a href="#【兼容处理】-3" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>而在echo前加上var就正常了，这个就是我们提到var的目的。</p>
+<h3 id="CSS的”float”属性"><a href="#CSS的”float”属性" class="headerlink" title="CSS的”float”属性"></a>CSS的”float”属性</h3><p>Javascript访问一个给定CSS 值的最基本句法是：object.style.property，但部分CSS属性跟Javascript中的保留字命名相同，如”float”，”for”，”class”等，不同浏览器写法不同。</p>
+<p>在IE中这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"header"</span>).style.styleFloat = <span class="string">"left"</span>;</span><br></pre></td></tr></table></figure>
+<p>在FF中这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"header"</span>).style.cssFloat = <span class="string">"left"</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="【兼容处理】-4"><a href="#【兼容处理】-4" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">document</span>.all)&#123;</span><br><span class="line">　　<span class="built_in">document</span>.getElementById(<span class="string">"header"</span>).style.styleFloat = <span class="string">"left"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">　　<span class="built_in">document</span>.getElementById(<span class="string">"header"</span>).style.cssFloat = <span class="string">"left"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="访问-lt-label-gt-标签中的”for”"><a href="#访问-lt-label-gt-标签中的”for”" class="headerlink" title="访问&lt;label&gt;标签中的”for”"></a>访问&lt;label&gt;标签中的”for”</h3><p>和”float”属性一样，同样需要使用不现的句法区分来访问&lt;label&gt;标签中的”for”。</p>
+<p>在IE中这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">document</span>.getElementById(<span class="string">"myLabel"</span>);</span><br><span class="line"><span class="keyword">var</span> myAttribute = myObject.getAttribute(<span class="string">"htmlFor"</span>);</span><br></pre></td></tr></table></figure>
+<p>在FF中这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">document</span>.getElementById(<span class="string">"myLabel"</span>);</span><br><span class="line"><span class="keyword">var</span> myAttribute = myObject.getAttribute(<span class="string">"for"</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="【兼容处理】-5"><a href="#【兼容处理】-5" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>解决的方法也是先 判断浏览器类型。</p>
+<h3 id="访问和设置class属性"><a href="#访问和设置class属性" class="headerlink" title="访问和设置class属性"></a>访问和设置class属性</h3><p>同样由于class是Javascript保留字的原因，这两种浏览器使用不同的 JavaScript 方法来获取这个属性。</p>
+<p>IE8.0之前的所有IE版本的写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">document</span>.getElementById(<span class="string">"header"</span>);</span><br><span class="line"><span class="keyword">var</span> myAttribute = myObject.getAttribute(<span class="string">"className"</span>);</span><br></pre></td></tr></table></figure>
+<p>另外，在使用setAttribute()设置Class属性的时候，两种浏览器也存在同样的差异。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setAttribute(<span class="string">"className"</span>,value);</span><br></pre></td></tr></table></figure>
+<p>这种写法适用于IE8.0之前的所有IE版本，注意：IE8.0也不支持”className”属性了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setAttribute(<span class="string">"class"</span>,value);适用于IE8<span class="number">.0</span> 以及 firefox。</span><br></pre></td></tr></table></figure>
+<h5 id="【兼容处理】-6"><a href="#【兼容处理】-6" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>方法一，两种都写上：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">document</span>.getElementById(<span class="string">"header"</span>);</span><br><span class="line">myObject.setAttribute(<span class="string">"class"</span>,<span class="string">"classValue"</span>);</span><br><span class="line">myObject.setAttribute(<span class="string">"className"</span>,<span class="string">"classValue"</span>);</span><br><span class="line"> <span class="comment">//设置header的class为classValue</span></span><br></pre></td></tr></table></figure>
+<p>方法二，IE和FF都支持object.className，所以可以这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">document</span>.getElementById(<span class="string">"header"</span>);</span><br><span class="line">myObject.className=<span class="string">"classValue"</span>;<span class="comment">//设置header的class为classValue</span></span><br></pre></td></tr></table></figure>
+<p>方法三，先判断浏览器类型，再根据浏览器类型采用对应的写法。</p>
+<h3 id="对象宽高赋值问题"><a href="#对象宽高赋值问题" class="headerlink" title="对象宽高赋值问题"></a>对象宽高赋值问题</h3><p>FireFox中类似 obj.style.height = imgObj.height 的语句无效。</p>
+<h5 id="【兼容处理】-7"><a href="#【兼容处理】-7" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>统一使用 obj.style.height = imgObj.height + ‘px’;</p>
+<h3 id="getElementById"><a href="#getElementById" class="headerlink" title="getElementById"></a>getElementById</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;input id=<span class="string">"id"</span> type=<span class="string">"button"</span> value=<span class="string">"click me"</span> onclick=<span class="string">"alert(id.value)"</span>/&amp;gt;</span><br></pre></td></tr></table></figure>
+<p>在Firefox中，按钮没反应，在IE中，就可以，因为对于IE来说，一个HTML 元素的 ID 可以直接在脚本中当作变量名来使用，而Firefox中不可以。</p>
+<h5 id="【兼容处理】-8"><a href="#【兼容处理】-8" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>尽量采用W3C DOM 的写法，访问对象的时候，用document.getElementById(“id”) 以ID来访问对象，且一个ID在页面中必须是唯一的，同样在以标签名来访问对象的时候，用document.getElementsByTagName(“div”)[0] 。该方式得到较多浏览器的支持。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;input id=<span class="string">"id"</span> type=<span class="string">"button"</span> value=<span class="string">"click me"</span> onclick=<span class="string">"alert(document.getElementById('id').value)"</span> /&amp;gt;</span><br></pre></td></tr></table></figure>
+<h3 id="集合类对象访问"><a href="#集合类对象访问" class="headerlink" title="集合类对象访问"></a>集合类对象访问</h3><p>IE下，可以使用()或[]获取集合类对象；Firefox下，只能使用[]获取集合类对象。如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.write(<span class="built_in">document</span>.forms(<span class="string">"formName"</span>).src);</span><br><span class="line"><span class="comment">//该写法在IE下能访问到Form对象的scrc属性</span></span><br></pre></td></tr></table></figure>
+<h5 id="【兼容处理】-9"><a href="#【兼容处理】-9" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>统一使用[]获取集合类对象。</p>
+<h3 id="frame的引用"><a href="#frame的引用" class="headerlink" title="frame的引用"></a>frame的引用</h3><p>IE可以通过id或者name访问这个frame对应的window对象，而Firefox只可以通过name来访问这个frame对应的window对象。</p>
+<h5 id="【兼容处理】-10"><a href="#【兼容处理】-10" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>使用frame的name来访问frame对象，另外，在IE和Firefox中都可以使用window.document.getElementById(”frameId”)来访问这个frame对象。</p>
+<h3 id="parentElement"><a href="#parentElement" class="headerlink" title="parentElement"></a>parentElement</h3><p>IE中支持使用parentElement和parentNode获取父节点。而Firefox只可以使用parentNode。</p>
+<h5 id="【兼容处理】-11"><a href="#【兼容处理】-11" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>因为firefox与IE都支持DOM，因此统一使用parentNode来访问父节点。</p>
+<h3 id="table操作"><a href="#table操作" class="headerlink" title="table操作"></a>table操作</h3><p>IE下table中无论是用innerHTML还是appendChild插入&lt;tr&gt;都没有效果，而其他浏览器却显示正常。</p>
+<h5 id="【兼容处理】-12"><a href="#【兼容处理】-12" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>解决的方法是，将&lt;tr&gt;加到table的&lt;tbody&gt;元素中，如下面所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> row = <span class="built_in">document</span>.createElement(<span class="string">"tr"</span>);</span><br><span class="line"><span class="keyword">var</span> cell = <span class="built_in">document</span>.createElement(<span class="string">"td"</span>);</span><br><span class="line"><span class="keyword">var</span> cell_text = <span class="built_in">document</span>.createTextNode(<span class="string">"插入的内容"</span>);</span><br><span class="line">cell.appendChild(cell_text);</span><br><span class="line">row.appendChild(cell);</span><br><span class="line"><span class="built_in">document</span>.getElementsByTagName(<span class="string">"tbody"</span>)[<span class="number">0</span>].appendChild(row);</span><br></pre></td></tr></table></figure>
+<h3 id="移除节点removeNode-和removeChild"><a href="#移除节点removeNode-和removeChild" class="headerlink" title="移除节点removeNode()和removeChild()"></a>移除节点removeNode()和removeChild()</h3><p>appendNode在IE和Firefox下都能正常使用，但是removeNode只能在IE下用。<br>removeNode方法的功能是删除一个节点，语法为node.removeNode（false）或者node.removeNode（true），返回值是被删除的节点。<br>removeNode（false）表示仅仅删除指定节点，然后这个节点的原孩子节点提升为原双亲节点的孩子节点。<br>removeNode（true）表示删除指定节点及其所有下属节点。被删除的节点成为了孤立节点，不再具有有孩子节点和双亲节点。</p>
+<h5 id="【兼容处理】-13"><a href="#【兼容处理】-13" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>Firefox中节点没有removeNode方法，只能用removeChild方法代替，先回到父节点，在从父节点上移除要移除的节点。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.parentNode.removeChild(node); </span><br><span class="line"><span class="comment">// 为了在ie和firefox下都能正常使用，取上一层的父结点，然后remove。</span></span><br></pre></td></tr></table></figure>
+<h3 id="childNodes获取的节点"><a href="#childNodes获取的节点" class="headerlink" title="childNodes获取的节点"></a>childNodes获取的节点</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;ul id=<span class="string">"main"</span>&amp;gt; </span><br><span class="line">  &amp;lt;li&amp;gt;<span class="number">1</span>&amp;lt;<span class="regexp">/li&amp;gt;</span></span><br><span class="line"><span class="regexp">  &amp;lt;li&amp;gt;2&amp;lt;/</span>li&amp;gt;</span><br><span class="line">  &amp;lt;li&amp;gt;<span class="number">3</span>&amp;lt;<span class="regexp">/li&amp;gt;</span></span><br><span class="line"><span class="regexp">&amp;lt;/u</span>l&amp;gt; </span><br><span class="line">&amp;lt;input type=button value=<span class="string">"click me!"</span> onclick=<span class="string">"alert(document.getElementById('main').childNodes.length)"</span>&amp;gt;</span><br></pre></td></tr></table></figure>
+<p>分别用IE和Firefox运行，IE的结果是3，而Firefox则是7。Firefox使用DOM规范，”#text”表示文本（实际是无意义的空格和换行等）在Firefox里也会被解析成一个节点，在IE里只有有实际意义的文本才会解析成”#text”。</p>
+<h5 id="【兼容处理】-14"><a href="#【兼容处理】-14" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><p>方法一，获取子节点时，可以通过node.getElementsByTagName()来回避这个问题。但是 getElementsByTagName对复杂的DOM结构遍历明显不如用childNodes，因为childNodes能更好的处理DOM的层次结构。</p>
+<p>方法二，在实际运用中，Firefox在遍历子节点时，不妨在for循环里加上：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(childNode.nodeName==<span class="string">"#text"</span>) <span class="keyword">continue</span>;<span class="comment">//或者使用nodeType == 1。</span></span><br></pre></td></tr></table></figure>
+<h3 id="Firefox不能对innerText支持"><a href="#Firefox不能对innerText支持" class="headerlink" title="Firefox不能对innerText支持"></a>Firefox不能对innerText支持</h3><p>Firefox不支持innerText，它支持textContent来实现innerText，不过textContent没有像innerText一样考虑元素的display方式，所以不完全与IE兼容。如果不用textContent，字符串里面不包含HTML代码也可以用innerHTML代替。</p>
+<h5 id="【兼容处理】-15"><a href="#【兼容处理】-15" class="headerlink" title="【兼容处理】"></a>【兼容处理】</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">document</span>.all)&#123;</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'element'</span>).innerText = <span class="string">"my text"</span>;</span><br><span class="line">&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'element'</span>).textContent = <span class="string">"my text"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/IE/" rel="tag"># IE</a>
+          
+            <a href="/tags/FF/" rel="tag"># FF</a>
+          
+            <a href="/tags/script/" rel="tag"># script</a>
+          
+            <a href="/tags/compatible/" rel="tag"># compatible</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/10/20/css-performance/" rel="next" title="CSS性能调优">
+                <i class="fa fa-chevron-left"></i> CSS性能调优
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/10/28/js-or-and/" rel="prev" title="JS中的与（AND）、或（OR）工作原理">
+                JS中的与（AND）、或（OR）工作原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">SpeMoon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#getYear-方法"><span class="nav-number">1.</span> <span class="nav-text">getYear()方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】"><span class="nav-number">1.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eval-函数"><span class="nav-number">2.</span> <span class="nav-text">eval()函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const声明"><span class="nav-number">3.</span> <span class="nav-text">const声明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-2"><span class="nav-number">3.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#var"><span class="nav-number">4.</span> <span class="nav-text">var</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-3"><span class="nav-number">4.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS的”float”属性"><span class="nav-number">5.</span> <span class="nav-text">CSS的”float”属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-4"><span class="nav-number">5.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问-lt-label-gt-标签中的”for”"><span class="nav-number">6.</span> <span class="nav-text">访问&lt;label&gt;标签中的”for”</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-5"><span class="nav-number">6.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问和设置class属性"><span class="nav-number">7.</span> <span class="nav-text">访问和设置class属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-6"><span class="nav-number">7.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象宽高赋值问题"><span class="nav-number">8.</span> <span class="nav-text">对象宽高赋值问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-7"><span class="nav-number">8.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getElementById"><span class="nav-number">9.</span> <span class="nav-text">getElementById</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-8"><span class="nav-number">9.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合类对象访问"><span class="nav-number">10.</span> <span class="nav-text">集合类对象访问</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-9"><span class="nav-number">10.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frame的引用"><span class="nav-number">11.</span> <span class="nav-text">frame的引用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-10"><span class="nav-number">11.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parentElement"><span class="nav-number">12.</span> <span class="nav-text">parentElement</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-11"><span class="nav-number">12.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#table操作"><span class="nav-number">13.</span> <span class="nav-text">table操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-12"><span class="nav-number">13.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移除节点removeNode-和removeChild"><span class="nav-number">14.</span> <span class="nav-text">移除节点removeNode()和removeChild()</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-13"><span class="nav-number">14.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#childNodes获取的节点"><span class="nav-number">15.</span> <span class="nav-text">childNodes获取的节点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-14"><span class="nav-number">15.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Firefox不能对innerText支持"><span class="nav-number">16.</span> <span class="nav-text">Firefox不能对innerText支持</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【兼容处理】-15"><span class="nav-number">16.0.1.</span> <span class="nav-text">【兼容处理】</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SpeMoon</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

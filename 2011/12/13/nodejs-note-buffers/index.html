@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="人在江湖漂">
+<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:site_name" content="人在江湖漂">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="人在江湖漂">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archives/"/>
+
+
+
+
+
+  <title>Node.js学习笔记——Buffers 缓冲器 | 人在江湖漂</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人在江湖漂</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+
+            
+              首页
+            
+
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+
+            
+              归档
+            
+
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/12/13/nodejs-note-buffers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SpeMoon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人在江湖漂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Node.js学习笔记——Buffers 缓冲器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-12-13T00:00:00+08:00">2011-12-13</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">node.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>纯Javascript语言是Unicode友好性的，但是难以处理二进制数据。在处理TCP流和文件系统时经常需要操作字节流。Node提供了一些列机制，用于操作、创建、以及消耗（consuming）字节流。</p>
+<p>在实例化的Buffer类中存储了原始数据。Buffer类似于一个整数数组，但Buffer对应了在V8堆（the V8 heap）外的原始存储空间分配。一旦创建了Buffer实例，则无法改变其大小。</p>
+<p>另外，Buffer是一个全局对象。</p>
+<p>在缓冲器（Buffers）和JavaScript间进行字符串的转换需要调用特定的编码方法。如下列举了不同的编码方法：</p>
+<ul>
+<li><p>‘ascii’ - 仅对应7位的ASCII数据。虽然这种编码方式非常迅速，并且如果设置了最高位，则会将其移去。</p>
+</li>
+<li><p>‘utf8’ - 对应多字节编码Unicode字符。大量网页和其他文件格式使用这类编码方式。</p>
+</li>
+<li><p>‘ucs2’ - 2字节的，低字节序编码Unicode字符。只能编码BMP（第零平面，U+0000 - U+FFFF）字符。</p>
+</li>
+<li><p>‘base64’ - Base64 字符串编码.</p>
+</li>
+<li><p>‘binary’ - 仅使用每个字符的头8位将原始的二进制信息进行编码。在需使用Buffer的情况下，应该尽量避免使用这个已经过时的编码方式。而且，这个编码方式不会出现在未来版本的Node中。</p>
+</li>
+<li><p>‘hex’ - 将一个字节编码为两个16进制字符。</p>
+</li>
+</ul>
+<h3 id="new-Buffer-size"><a href="#new-Buffer-size" class="headerlink" title="new Buffer(size)"></a>new Buffer(size)</h3><p>使用array的空间创建一个buffer实例。</p>
+<h3 id="new-Buffer-str-encoding-’utf8’"><a href="#new-Buffer-str-encoding-’utf8’" class="headerlink" title="new Buffer(str, encoding=’utf8’)"></a>new Buffer(str, encoding=’utf8’)</h3><p>创建一个包含给定str的buffer实例。</p>
+<h3 id="buffer-write-string-offset-0-encoding-’utf8’"><a href="#buffer-write-string-offset-0-encoding-’utf8’" class="headerlink" title="buffer.write(string, offset=0, encoding=’utf8’)"></a>buffer.write(string, offset=0, encoding=’utf8’)</h3><p>通过给定的编码方式把string写入到buffer的offset（偏移地址）中，并且返回写入的字节数。如果当前的buffer没有足够存储空间，字符串会部分地保存在buffer中，而不是整串字符。需要注意的是，如果使用’utf8’进行编码，该方法不会对零散的字符进行编写。</p>
+<p>例如：将一串utf8格式的字符串写入Buffer，然后输出：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">buf = <span class="keyword">new</span> Buffer(<span class="number">256</span>);</span><br><span class="line">len = buf.write(<span class="string">'\u00bd + \u00bc = \u00be'</span>, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(len + <span class="string">" bytes: "</span> + buf.toString(<span class="string">'utf8'</span>, <span class="number">0</span>, len));</span><br><span class="line"><span class="comment">// 12 bytes: ½ + ¼ = ¾</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="buffer-toString-encoding-start-0-end-buffer-length"><a href="#buffer-toString-encoding-start-0-end-buffer-length" class="headerlink" title="buffer.toString(encoding, start=0, end=buffer.length)"></a>buffer.toString(encoding, start=0, end=buffer.length)</h3><p>对缓冲器中的以encoding方式编码的，以start标识符开始，以end标识符结尾的缓冲数据进行解码，并输出字符串。</p>
+<h3 id="buffer-index"><a href="#buffer-index" class="headerlink" title="buffer[index]"></a>buffer[index]</h3><p>获取或者设置位于index字节的值。由于返回值为单个的字节，因此其范围应该在0x00 到 0xFF（16进制）或者0 and 255（10进制）之间</p>
+<p>例如：通过每次仅输入一个字符的方式将整串ASCII字符录入Buffer中：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">str = <span class="string">"node.js"</span>;</span><br><span class="line">buf = <span class="keyword">new</span> Buffer(str.length);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; str.length ; i++) &#123;</span><br><span class="line">    buf[i] = str.charCodeAt(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(buf);</span><br><span class="line"></span><br><span class="line"><span class="comment">// node.js</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Buffer-isBuffer-obj"><a href="#Buffer-isBuffer-obj" class="headerlink" title="Buffer.isBuffer(obj)"></a>Buffer.isBuffer(obj)</h3><p>验证obj的类别是否为Buffer类。</p>
+<h3 id="Buffer-byteLength-string-encoding-’utf8’"><a href="#Buffer-byteLength-string-encoding-’utf8’" class="headerlink" title="Buffer.byteLength(string, encoding=’utf8’)"></a>Buffer.byteLength(string, encoding=’utf8’)</h3><p>返回字符串长度的实际值。与String.prototype.length的区别之处在于该方法返回的是字符串中characters的个数。</p>
+<p>例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">str = <span class="string">'\u00bd + \u00bc = \u00be'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(str + <span class="string">": "</span> + str.length + <span class="string">" characters, "</span> +</span><br><span class="line">        Buffer.byteLength(str, <span class="string">'utf8'</span>) + <span class="string">" bytes"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ½ + ¼ = ¾: 9 characters, 12 bytes</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="buffer-length"><a href="#buffer-length" class="headerlink" title="buffer.length"></a>buffer.length</h3><p>返回Buffer占用的字节数。需要注意的是，length并非其内容占的大小，而是指分配给Buffer实例的存储空间的大小，因此该值不会随Buffer内容的变化而变化。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">buf = <span class="keyword">new</span> Buffer(<span class="number">1234</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(buf.length);</span><br><span class="line">buf.write(<span class="string">"some string"</span>, <span class="string">"ascii"</span>, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(buf.length);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1234</span></span><br><span class="line"><span class="comment">// 1234</span></span><br></pre></td></tr></table></figure>
+<h3 id="buffer-copy-targetBuffer-targetStart-0-sourceStart-0-sourceEnd-buffer-length"><a href="#buffer-copy-targetBuffer-targetStart-0-sourceStart-0-sourceEnd-buffer-length" class="headerlink" title="buffer.copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)"></a>buffer.copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)</h3><p>在两个Buffer之间进行memcpy() 操作。</p>
+<p>例如：创建2个Buffer实例，然后将buf1中第16字节到第19字节间的信息复制到buf2中，并使在buf2中新的字符串首字符位于第8字节：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">buf1 = <span class="keyword">new</span> Buffer(<span class="number">26</span>);</span><br><span class="line">buf2 = <span class="keyword">new</span> Buffer(<span class="number">26</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> ; i &lt; <span class="number">26</span> ; i++) &#123;</span><br><span class="line">    buf1[i] = i + <span class="number">97</span>; <span class="comment">// 97 is ASCII a</span></span><br><span class="line">    buf2[i] = <span class="number">33</span>; <span class="comment">// ASCII !</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">buf1.copy(buf2, <span class="number">8</span>, <span class="number">16</span>, <span class="number">20</span>);</span><br><span class="line"><span class="built_in">console</span>.log(buf2.toString(<span class="string">'ascii'</span>, <span class="number">0</span>, <span class="number">25</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// !!!!!!!!qrst!!!!!!!!!!!!!</span></span><br></pre></td></tr></table></figure>
+<h3 id="buffer-slice-start-end-buffer-length"><a href="#buffer-slice-start-end-buffer-length" class="headerlink" title="buffer.slice(start, end=buffer.length)"></a>buffer.slice(start, end=buffer.length)</h3><p>返回一个和原Buffer引用相同存储空间的新Buffer，但是新Buffer中的偏移地址截取了原Buffer偏移地址中自start到end的部分。</p>
+<p>特别注意：通过修改新的Buffer切片（slice）中的内容同样会修改存储在原Buffer中的信息！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> buf1 = <span class="keyword">new</span> Buffer(<span class="number">26</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> ; i &lt; <span class="number">26</span> ; i++) &#123;</span><br><span class="line">    buf1[i] = i + <span class="number">97</span>; <span class="comment">// 97 is ASCII a</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> buf2 = buf1.slice(<span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(buf2.toString(<span class="string">'ascii'</span>, <span class="number">0</span>, buf2.length));</span><br><span class="line">buf1[<span class="number">0</span>] = <span class="number">33</span>;</span><br><span class="line"><span class="built_in">console</span>.log(buf2.toString(<span class="string">'ascii'</span>, <span class="number">0</span>, buf2.length));</span><br><span class="line"></span><br><span class="line"><span class="comment">// abc</span></span><br><span class="line"><span class="comment">// !bc</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/node/" rel="tag"># node</a>
+          
+            <a href="/tags/buffer/" rel="tag"># buffer</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/12/12/nodejs-note-events/" rel="next" title="Node.js学习笔记——Events 事件模块">
+                <i class="fa fa-chevron-left"></i> Node.js学习笔记——Events 事件模块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/12/14/nodejs-note-streams/" rel="prev" title="Node.js学习笔记——Streams 流">
+                Node.js学习笔记——Streams 流 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">SpeMoon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#new-Buffer-size"><span class="nav-number">1.</span> <span class="nav-text">new Buffer(size)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new-Buffer-str-encoding-’utf8’"><span class="nav-number">2.</span> <span class="nav-text">new Buffer(str, encoding=’utf8’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#buffer-write-string-offset-0-encoding-’utf8’"><span class="nav-number">3.</span> <span class="nav-text">buffer.write(string, offset=0, encoding=’utf8’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#buffer-toString-encoding-start-0-end-buffer-length"><span class="nav-number">4.</span> <span class="nav-text">buffer.toString(encoding, start=0, end=buffer.length)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#buffer-index"><span class="nav-number">5.</span> <span class="nav-text">buffer[index]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer-isBuffer-obj"><span class="nav-number">6.</span> <span class="nav-text">Buffer.isBuffer(obj)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer-byteLength-string-encoding-’utf8’"><span class="nav-number">7.</span> <span class="nav-text">Buffer.byteLength(string, encoding=’utf8’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#buffer-length"><span class="nav-number">8.</span> <span class="nav-text">buffer.length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#buffer-copy-targetBuffer-targetStart-0-sourceStart-0-sourceEnd-buffer-length"><span class="nav-number">9.</span> <span class="nav-text">buffer.copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#buffer-slice-start-end-buffer-length"><span class="nav-number">10.</span> <span class="nav-text">buffer.slice(start, end=buffer.length)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SpeMoon</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

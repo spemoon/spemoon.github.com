@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="人在江湖漂">
+<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:site_name" content="人在江湖漂">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="人在江湖漂">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/archives/"/>
+
+
+
+
+
+  <title>Node.js学习笔记——Streams 流 | 人在江湖漂</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人在江湖漂</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+
+            
+              首页
+            
+
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+
+            
+              归档
+            
+
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/12/14/nodejs-note-streams/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SpeMoon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人在江湖漂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Node.js学习笔记——Streams 流</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-12-14T00:00:00+08:00">2011-12-14</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">node.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在Node中，Stream（流）是一个由不同对象实现的抽象接口。例如请求HTTP服务器的request是一个流，类似于stdout（标准输出）。流可以是可读的，可写的，或者既可读又可写。所有流都是EventEmitter的实例。</p>
+<h2 id="Readable-Stream-可读流"><a href="#Readable-Stream-可读流" class="headerlink" title="Readable Stream 可读流"></a>Readable Stream 可读流</h2><p>一个可读流具有下述的方法、成员、及事件。</p>
+<h3 id="Event-‘data’-事件：’data’"><a href="#Event-‘data’-事件：’data’" class="headerlink" title="Event: ‘data’ 事件：’data’"></a>Event: ‘data’ 事件：’data’</h3><p>function (data) { }</p>
+<p>‘data’事件的回调函数参数默认情况下是一个Buffer对象。如果使用了setEncoding() 则参数为一个字符串。</p>
+<h3 id="Event-‘end’-事件：’end’"><a href="#Event-‘end’-事件：’end’" class="headerlink" title="Event: ‘end’ 事件：’end’"></a>Event: ‘end’ 事件：’end’</h3><p>function () { }</p>
+<p>当流中接收到EOF（TCP中为FIN）时此事件被触发，表示流的读取已经结束，不会再发生任何’data’事件。如果流同时也是可写的，那它还可以继续写入。</p>
+<h3 id="Event-‘error’-事件：’error’"><a href="#Event-‘error’-事件：’error’" class="headerlink" title="Event: ‘error’ 事件：’error’"></a>Event: ‘error’ 事件：’error’</h3><p>function (exception) { }</p>
+<p>接收数据的过程中发生任何错误时，此事件被触发。</p>
+<h3 id="Event-‘close’-事件：’close’"><a href="#Event-‘close’-事件：’close’" class="headerlink" title="Event: ‘close’ 事件：’close’"></a>Event: ‘close’ 事件：’close’</h3><p>function () { }</p>
+<p>当底层的文件描述符被关闭时触发此事件，并不是所有流都会触发这个事件。（例如，一个连接进入的HTTP request流就不会触发’close’事件。）</p>
+<h3 id="Event-‘fd’-事件：’fd’"><a href="#Event-‘fd’-事件：’fd’" class="headerlink" title="Event: ‘fd’ 事件：’fd’"></a>Event: ‘fd’ 事件：’fd’</h3><p>function (fd) { }</p>
+<p>当在流中接收到一个文件描述符时触发此事件。只有UNIX流支持这个功能，其他类型的流均不会触发此事件。</p>
+<h3 id="stream-readable"><a href="#stream-readable" class="headerlink" title="stream.readable"></a>stream.readable</h3><p>这是一个布尔值，默认值为true。当’error’事件或’end’事件发生后，或者destroy()被调用后，这个属性将变为false。</p>
+<h3 id="stream-setEncoding-encoding"><a href="#stream-setEncoding-encoding" class="headerlink" title="stream.setEncoding(encoding)"></a>stream.setEncoding(encoding)</h3><p>调用此方法会影响’data’事件的回调函数参数形式，默认为Buffer对象，调用此方法后为字符串。encoding参数可以是’utf8’、’ascii’、或’base64’。</p>
+<h3 id="stream-pause"><a href="#stream-pause" class="headerlink" title="stream.pause()"></a>stream.pause()</h3><p>暂停’data’事件的触发。</p>
+<h3 id="stream-resume"><a href="#stream-resume" class="headerlink" title="stream.resume()"></a>stream.resume()</h3><p>恢复被pause()调用暂停的’data’事件触发。</p>
+<h3 id="stream-destroy"><a href="#stream-destroy" class="headerlink" title="stream.destroy()"></a>stream.destroy()</h3><p>关闭底层的文件描述符。流上将不会再触发任何事件。</p>
+<h3 id="stream-destroySoon"><a href="#stream-destroySoon" class="headerlink" title="stream.destroySoon()"></a>stream.destroySoon()</h3><p>在写队列清空后（所有写操作完成后），关闭文件描述符。</p>
+<h3 id="stream-pipe-destination-options"><a href="#stream-pipe-destination-options" class="headerlink" title="stream.pipe(destination, [options])"></a>stream.pipe(destination, [options])</h3><p>这是Stream.prototype（Stream原型对象）的一个方法，对所有Stream对象有效。</p>
+<p>用于将这个可读流和destination目标可写流连接起来，传入这个流中的数据将会写入到destination流中。通过在必要时暂停和恢复流，来源流和目的流得以保持同步。</p>
+<p>模拟Unix系统的cat命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">process.stdin.resume();</span><br><span class="line">process.stdin.pipe(process.stdout);</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下，当来源流的end事件触发时目的流的end()方法会被调用，此时destination目的流将不再可写入。要在这种情况下为了保持目的流仍然可写入，可将options参数设为{ end: false }。</p>
+<p>这使process.stdout保持打开状态，因此”Goodbye”可以在end事件发生后被写入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">process.stdin.resume();</span><br><span class="line"></span><br><span class="line">process.stdin.pipe(process.stdout, &#123; end: false &#125;);</span><br><span class="line"></span><br><span class="line">process.stdin.on(&quot;end&quot;, function() &#123;</span><br><span class="line">    process.stdout.write(&quot;Goodbye\n&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>注意：如果来源流不支持pause()和resume()方法，此函数将在来源流对象上增加这两个方法的简单定义，内容为触发’pause’和’resume’事件。</p>
+<h2 id="Writable-Stream-可写流"><a href="#Writable-Stream-可写流" class="headerlink" title="Writable Stream 可写流"></a>Writable Stream 可写流</h2><p>一个可写流具有下列方法、成员、和事件。</p>
+<h3 id="Event-‘drain’-事件：’drain’"><a href="#Event-‘drain’-事件：’drain’" class="headerlink" title="Event: ‘drain’ 事件：’drain’"></a>Event: ‘drain’ 事件：’drain’</h3><p>function () { }</p>
+<p>发生在write()方法被调用并返回false之后。此事件被触发说明内核缓冲区已空，再次写入是安全的。</p>
+<h3 id="Event-‘error’-事件：’error’-1"><a href="#Event-‘error’-事件：’error’-1" class="headerlink" title="Event: ‘error’ 事件：’error’"></a>Event: ‘error’ 事件：’error’</h3><p>function (exception) { }</p>
+<p>发生错误时被触发，回调函数接收一个异常参数exception。</p>
+<h3 id="Event-‘close’-事件：’close’-1"><a href="#Event-‘close’-事件：’close’-1" class="headerlink" title="Event: ‘close’ 事件：’close’"></a>Event: ‘close’ 事件：’close’</h3><p>function () { }</p>
+<p>底层文件描述符被关闭时被触发。</p>
+<h3 id="Event-‘pipe’-事件：’pipe’"><a href="#Event-‘pipe’-事件：’pipe’" class="headerlink" title="Event: ‘pipe’ 事件：’pipe’"></a>Event: ‘pipe’ 事件：’pipe’</h3><p>function (src) { }</p>
+<p>当此可写流作为参数传给一个可读流的pipe方法时被触发。</p>
+<h3 id="stream-writable"><a href="#stream-writable" class="headerlink" title="stream.writable"></a>stream.writable</h3><p>一个布尔值，默认值为true。在’error’事件被触发之后，或end() / destroy()方法被调用后此属性被设为false。</p>
+<h3 id="stream-write-string-encoding-’utf8’-fd"><a href="#stream-write-string-encoding-’utf8’-fd" class="headerlink" title="stream.write(string, encoding=’utf8’, [fd])"></a>stream.write(string, encoding=’utf8’, [fd])</h3><p>使用指定编码encoding将字符串string写入到流中。如果字符串被成功写入内核缓冲区，此方法返回true。如果内核缓冲区已满，此方法返回false，数据将在以后被送出。当内核缓冲区再次被清空后’drain’事件将被触发。encoding参数默认为’utf8’`。</p>
+<p>如果指定了可选参数fd，它将被作为一个文件描述符通过流传送。此功能仅被Unix流所支持，对于其他流此操作将被忽略而没有任何提示。当使用此方法传送一个文件描述符时，如果在流没有清空前关闭此文件描述符，将造成传送一个无效（已关闭）FD的风险。</p>
+<h3 id="stream-write-buffer"><a href="#stream-write-buffer" class="headerlink" title="stream.write(buffer)"></a>stream.write(buffer)</h3><p>除了用一个Buffer对象替代字符串之外，其他同上。</p>
+<h3 id="stream-end"><a href="#stream-end" class="headerlink" title="stream.end()"></a>stream.end()</h3><p>使用EOF或FIN结束一个流的输出。</p>
+<h3 id="stream-end-string-encoding"><a href="#stream-end-string-encoding" class="headerlink" title="stream.end(string, encoding)"></a>stream.end(string, encoding)</h3><p>以指定的字符编码encoding传送一个字符串string，然后使用EOF或FIN结束流的输出。这对降低数据包传输量有所帮助。</p>
+<h3 id="stream-end-buffer"><a href="#stream-end-buffer" class="headerlink" title="stream.end(buffer)"></a>stream.end(buffer)</h3><p>除了用一个buffer对象替代字符串之外，其他同上。</p>
+<h3 id="stream-destroy-1"><a href="#stream-destroy-1" class="headerlink" title="stream.destroy()"></a>stream.destroy()</h3><p>关闭底层文件描述符。在此流上将不会再触发任何事件。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/node/" rel="tag"># node</a>
+          
+            <a href="/tags/stream/" rel="tag"># stream</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/12/13/nodejs-note-buffers/" rel="next" title="Node.js学习笔记——Buffers 缓冲器">
+                <i class="fa fa-chevron-left"></i> Node.js学习笔记——Buffers 缓冲器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/12/15/nodejs-note-crypto/" rel="prev" title="Node.js学习笔记——Crypto 加密模块">
+                Node.js学习笔记——Crypto 加密模块 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">SpeMoon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Readable-Stream-可读流"><span class="nav-number">1.</span> <span class="nav-text">Readable Stream 可读流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-‘data’-事件：’data’"><span class="nav-number">1.1.</span> <span class="nav-text">Event: ‘data’ 事件：’data’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-‘end’-事件：’end’"><span class="nav-number">1.2.</span> <span class="nav-text">Event: ‘end’ 事件：’end’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-‘error’-事件：’error’"><span class="nav-number">1.3.</span> <span class="nav-text">Event: ‘error’ 事件：’error’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-‘close’-事件：’close’"><span class="nav-number">1.4.</span> <span class="nav-text">Event: ‘close’ 事件：’close’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-‘fd’-事件：’fd’"><span class="nav-number">1.5.</span> <span class="nav-text">Event: ‘fd’ 事件：’fd’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-readable"><span class="nav-number">1.6.</span> <span class="nav-text">stream.readable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-setEncoding-encoding"><span class="nav-number">1.7.</span> <span class="nav-text">stream.setEncoding(encoding)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-pause"><span class="nav-number">1.8.</span> <span class="nav-text">stream.pause()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-resume"><span class="nav-number">1.9.</span> <span class="nav-text">stream.resume()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-destroy"><span class="nav-number">1.10.</span> <span class="nav-text">stream.destroy()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-destroySoon"><span class="nav-number">1.11.</span> <span class="nav-text">stream.destroySoon()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-pipe-destination-options"><span class="nav-number">1.12.</span> <span class="nav-text">stream.pipe(destination, [options])</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Writable-Stream-可写流"><span class="nav-number">2.</span> <span class="nav-text">Writable Stream 可写流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-‘drain’-事件：’drain’"><span class="nav-number">2.1.</span> <span class="nav-text">Event: ‘drain’ 事件：’drain’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-‘error’-事件：’error’-1"><span class="nav-number">2.2.</span> <span class="nav-text">Event: ‘error’ 事件：’error’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-‘close’-事件：’close’-1"><span class="nav-number">2.3.</span> <span class="nav-text">Event: ‘close’ 事件：’close’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-‘pipe’-事件：’pipe’"><span class="nav-number">2.4.</span> <span class="nav-text">Event: ‘pipe’ 事件：’pipe’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-writable"><span class="nav-number">2.5.</span> <span class="nav-text">stream.writable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-write-string-encoding-’utf8’-fd"><span class="nav-number">2.6.</span> <span class="nav-text">stream.write(string, encoding=’utf8’, [fd])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-write-buffer"><span class="nav-number">2.7.</span> <span class="nav-text">stream.write(buffer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-end"><span class="nav-number">2.8.</span> <span class="nav-text">stream.end()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-end-string-encoding"><span class="nav-number">2.9.</span> <span class="nav-text">stream.end(string, encoding)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-end-buffer"><span class="nav-number">2.10.</span> <span class="nav-text">stream.end(buffer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-destroy-1"><span class="nav-number">2.11.</span> <span class="nav-text">stream.destroy()</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SpeMoon</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
